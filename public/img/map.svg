@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" font-family="Arial" font-size="13">
+<rect width="600" height="360" fill="#eef0e8"/><path d="M0 250 C150 270 300 300 600 330 V360 H0z" fill="#9cc7e0"/>
+<text x="40" y="330" fill="#3f6f8e" font-style="italic">Θερμαϊκός Κόλπος</text>
+<g stroke="#fff" stroke-width="10"><path d="M0 225 L600 300"/><path d="M0 150 L600 215"/><path d="M0 90 L600 150"/><path d="M180 0 L140 360"/><path d="M330 0 L300 360"/></g>
+<g fill="#5d6675" font-size="11"><text x="360" y="222" transform="rotate(7 360 222)">Τσιμισκή</text><text x="360" y="160" transform="rotate(6 360 160)">Εγνατία</text><text x="400" y="298" transform="rotate(7 400 298)">Λεωφ. Νίκης</text></g>
+<rect x="155" y="170" width="60" height="45" fill="#e3d4b8"/><text x="120" y="160">Πλ. Αριστοτέλους</text>
+<circle cx="470" cy="302" r="10" fill="#c8a165" stroke="#13294b" stroke-width="3"/><text x="440" y="330" fill="#13294b" font-weight="bold">Λευκός Πύργος</text>
+<g><circle cx="330" cy="210" r="14" fill="#b3261e"/><circle cx="330" cy="210" r="5" fill="#fff"/><rect x="345" y="182" width="150" height="24" rx="5" fill="#13294b"/><text x="352" y="199" fill="#fff" font-weight="bold">Leukon Urban Hotel</text></g>
+<path d="M330 215 L470 300" stroke="#13294b" stroke-width="2" stroke-dasharray="5 4"/><text x="385" y="268" fill="#13294b">7' με τα πόδια</text>
+</svg>

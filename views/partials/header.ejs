@@ -1,0 +1,19 @@
+<%- include('head') %>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Leukon Urban Hotel – αρχική">
+      <img src="/img/logo.svg" alt="" width="36" height="36"><span>Leukon <em>Urban Hotel</em></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="menu" aria-label="Μενού">☰</button>
+    <nav id="menu" aria-label="Κύρια πλοήγηση">
+      <a href="/rooms" class="<%= path.startsWith('/rooms') ? 'active' : '' %>">Δωμάτια</a>
+      <a href="/thessaloniki-guide" class="<%= path === '/thessaloniki-guide' ? 'active' : '' %>">Οδηγός πόλης</a>
+      <a href="/contact" class="<%= path === '/contact' ? 'active' : '' %>">Επικοινωνία</a>
+      <a href="/booking" class="btn btn-small">Κράτηση</a>
+    </nav>
+  </div>
+</header>
+<% if (typeof breadcrumbs !== 'undefined') { %>
+<nav class="container crumbs" aria-label="breadcrumb"><a href="/">Αρχική</a><% breadcrumbs.forEach(function(b, i){ %> › <% if (i === breadcrumbs.length - 1) { %><span aria-current="page"><%= b.name %></span><% } else { %><a href="<%= b.url %>"><%= b.name %></a><% } %><% }) %></nav>
+<% } %>
+<main id="main">

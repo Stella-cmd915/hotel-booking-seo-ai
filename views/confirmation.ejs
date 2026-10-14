@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<section class="container section narrow">
+  <%- include('partials/steps') %>
+  <div class="confirm">
+    <div class="tick" aria-hidden="true">✓</div>
+    <h1>Η κράτησή σας επιβεβαιώθηκε!</h1>
+    <p>Ευχαριστούμε, <%= bk.first_name %>. Ο κωδικός κράτησής σας είναι</p>
+    <p class="code"><%= bk.code %></p>
+    <dl class="confirm-dl">
+      <dt>Δωμάτιο</dt><dd><%= bk.room_name %></dd>
+      <dt>Διαμονή</dt><dd><%= bk.check_in %> → <%= bk.check_out %> (<%= nights %> νύχτες)</dd>
+      <dt>Επισκέπτες</dt><dd><%= bk.guests %></dd>
+      <dt>Σύνολο</dt><dd><strong><%= bk.total %> €</strong> (πληρωμή στο κατάλυμα)</dd>
+      <dt>Email</dt><dd><%= bk.email %></dd>
+    </dl>
+    <p class="small">Κρατήστε τον κωδικό για οποιαδήποτε αλλαγή. Για ακύρωση επικοινωνήστε στο +30 2310 000 000.</p>
+    <a class="btn" href="/thessaloniki-guide">Σχεδιάστε τη διαμονή σας στη Θεσσαλονίκη</a>
+  </div>
+</section>
+<%- include('partials/footer') %>

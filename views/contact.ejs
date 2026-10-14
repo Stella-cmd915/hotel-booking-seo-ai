@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<section class="container section two-col">
+  <div>
+    <h1>Επικοινωνία & τοποθεσία</h1>
+    <p><strong>Leukon Urban Hotel</strong><br>Τσιμισκή 100, 546 22 Θεσσαλονίκη</p>
+    <p>Τηλ.: <a href="tel:+302310000000">+30 2310 000 000</a><br>Email: <a href="mailto:info@leukonhotel.gr">info@leukonhotel.gr</a><br>Ρεσεψιόν: 24ωρη λειτουργία</p>
+    <h2>Πώς θα έρθετε</h2>
+    <ul class="plain">
+      <li>✈ Αεροδρόμιο «Μακεδονία»: ~25 λεπτά με ταξί ή λεωφορείο Χ1</li>
+      <li>🚆 Σιδηροδρομικός σταθμός: ~10 λεπτά με ταξί</li>
+      <li>🚇 Μετρό: σταθμός «Αγίας Σοφίας», 4 λεπτά με τα πόδια</li>
+      <li>🅿 Συνεργαζόμενο πάρκινγκ σε 150 μ. (15 €/ημέρα)</li>
+    </ul>
+    <img src="/img/map.svg" alt="Χάρτης: θέση του ξενοδοχείου σε σχέση με τον Λευκό Πύργο και την Πλατεία Αριστοτέλους" width="600" height="360" loading="lazy" class="map">
+  </div>
+  <div>
+    <h2>Στείλτε μας μήνυμα</h2>
+    <% if (sent) { %><div class="alert ok" role="status">Ευχαριστούμε! Θα σας απαντήσουμε σύντομα.</div><% } %>
+    <form method="post" action="/contact" class="form">
+      <label for="cn">Ονοματεπώνυμο</label><input id="cn" name="name" autocomplete="name" required>
+      <label for="ce">Email</label><input id="ce" type="email" name="email" autocomplete="email" required>
+      <label for="cm">Μήνυμα</label><textarea id="cm" name="message" rows="5" required></textarea>
+      <button class="btn">Αποστολή</button>
+    </form>
+  </div>
+</section>
+<%- include('partials/footer') %>

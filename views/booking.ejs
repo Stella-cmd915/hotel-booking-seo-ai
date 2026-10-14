@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<section class="container section">
+  <h1>Online κράτηση</h1>
+  <%- include('partials/steps') %>
+  <%- include('partials/searchbox') %>
+  <% if (errors.length) { %><div class="alert error" role="alert"><% errors.forEach(function(e){ %><p><%= e %></p><% }) %></div><% } %>
+  <% if (results) { %>
+    <h2 class="results-title">Διαθεσιμότητα για <%= nights %> <%= nights === 1 ? 'νύχτα' : 'νύχτες' %> · <%= q.guests %> <%= +q.guests === 1 ? 'άτομο' : 'άτομα' %></h2>
+    <div class="room-list">
+      <% results.forEach(function(r){ %>
+      <article class="room-row <%= r.available ? '' : 'unavailable' %>">
+        <img src="<%= r.image %>" alt="<%= r.name %>" width="600" height="400" loading="lazy">
+        <div>
+          <h3><%= r.name %></h3>
+          <p class="meta"><%= r.size_m2 %> m² · <%= r.bed %> · έως <%= r.max_guests %> άτομα</p>
+          <ul class="tags"><% r.amenities.split('|').slice(0,4).forEach(function(a){ %><li><%= a %></li><% }) %></ul>
+          <% if (r.available && r.free <= 2) { %><p class="scarcity"><%= r.free === 1 ? 'Απομένει μόνο 1 δωμάτιο' : 'Απομένουν μόνο ' + r.free + ' δωμάτια' %> αυτού του τύπου</p><% } %>
+          <% if (!r.fits) { %><p class="muted">Μέγιστη χωρητικότητα <%= r.max_guests %> ατόμων</p><% } else if (r.free <= 0) { %><p class="muted">Μη διαθέσιμο για τις ημερομηνίες σας</p><% } %>
+        </div>
+        <div class="room-cta">
+          <p class="price"><strong><%= r.price.total %> €</strong><br><small>σύνολο · ~<%= r.price.perNight %> €/νύχτα</small></p>
+          <% if (r.available) { %><a class="btn" href="/booking/checkout?room=<%= r.slug %>&check_in=<%= q.check_in %>&check_out=<%= q.check_out %>&guests=<%= q.guests %>">Επιλογή</a><% } else { %><span class="btn disabled" aria-disabled="true">Μη διαθέσιμο</span><% } %>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+    <p class="small">Οι τιμές περιλαμβάνουν πρωινό και ΦΠΑ. Εφαρμόζεται εποχική τιμολόγηση (Ιούνιος–Σεπτέμβριος) και προσαύξηση Παρασκευής–Σαββάτου.</p>
+  <% } else { %>
+    <p class="lead">Επιλέξτε ημερομηνίες και αριθμό επισκεπτών για να δείτε διαθεσιμότητα και τιμές σε πραγματικό χρόνο.</p>
+  <% } %>
+</section>
+<%- include('partials/footer') %>

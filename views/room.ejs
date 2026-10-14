@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<script type="application/ld+json"><%- JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'HotelRoom', name: room.name, description: room.description,
+  image: siteUrl + room.image, floorSize: { '@type': 'QuantitativeValue', value: room.size_m2, unitCode: 'MTK' },
+  occupancy: { '@type': 'QuantitativeValue', maxValue: room.max_guests }, bed: room.bed,
+  amenityFeature: room.amenities.split('|').map(a => ({ '@type': 'LocationFeatureSpecification', name: a, value: true })),
+  containedInPlace: { '@type': 'Hotel', name: 'Leukon Urban Hotel', url: siteUrl + '/' }
+}) %></script>
+<section class="container section room-detail">
+  <div>
+    <img class="room-img" src="<%= room.image %>" alt="<%= room.name %> του Leukon Urban Hotel – <%= room.view %>" width="900" height="600">
+    <h1><%= room.name %></h1>
+    <p class="meta"><%= room.size_m2 %> m² · <%= room.bed %> · έως <%= room.max_guests %> άτομα · Θέα: <%= room.view %></p>
+    <p><%= room.description %></p>
+    <h2>Παροχές δωματίου</h2>
+    <ul class="tags big"><% room.amenities.split('|').forEach(function(a){ %><li><%= a %></li><% }) %></ul>
+    <h2>Όροι κράτησης</h2>
+    <ul class="plain">
+      <li>Δωρεάν ακύρωση έως 3 ημέρες πριν την άφιξη</li>
+      <li>Πρωινό μπουφέ περιλαμβάνεται σε όλες τις απευθείας κρατήσεις</li>
+      <li>Πληρωμή στο κατάλυμα – δεν απαιτείται κάρτα για την κράτηση</li>
+    </ul>
+  </div>
+  <aside class="booking-aside">
+    <p class="price">από <strong><%= Math.round(room.base_price) %> €</strong> / νύχτα</p>
+    <p class="small">Η τελική τιμή υπολογίζεται με βάση τις ημερομηνίες (εποχικότητα, Σαββατοκύριακα).</p>
+    <%- include('partials/searchbox') %>
+    <p class="small">✓ Καλύτερη διαθέσιμη τιμή στην επίσημη ιστοσελίδα</p>
+  </aside>
+</section>
+<section class="container section">
+  <h2>Δείτε επίσης</h2>
+  <div class="cards three">
+    <% others.forEach(function(r){ %>
+    <article class="card"><img src="<%= r.image %>" alt="<%= r.name %>" width="600" height="400" loading="lazy"><div class="card-body"><h3><a href="/rooms/<%= r.slug %>"><%= r.name %></a></h3><p class="meta"><%= r.size_m2 %> m² · από <%= Math.round(r.base_price) %> €</p></div></article>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials/footer') %>

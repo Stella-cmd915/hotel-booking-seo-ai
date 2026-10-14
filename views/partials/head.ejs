@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <meta name="description" content="<%= description %>">
+  <% if (typeof noindex !== 'undefined' && noindex) { %><meta name="robots" content="noindex, nofollow"><% } else { %><link rel="canonical" href="<%= canonical %>"><% } %>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:image" content="<%= siteUrl %><%= typeof ogImage !== 'undefined' ? ogImage : '/img/hero.svg' %>">
+  <meta property="og:locale" content="el_GR">
+  <meta name="theme-color" content="#13294b">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof breadcrumbs !== 'undefined') { %>
+  <script type="application/ld+json"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Αρχική', item: siteUrl + '/' }].concat(breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 2, name: b.name, item: siteUrl + b.url }))) }) %></script>
+  <% } %>
+</head>
+<body class="<%= typeof isAdmin !== 'undefined' ? 'admin-body' : '' %>">
+<a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>

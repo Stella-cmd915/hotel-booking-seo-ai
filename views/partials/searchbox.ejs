@@ -1,0 +1,8 @@
+<form class="searchbox" action="/booking" method="get" aria-label="Έλεγχος διαθεσιμότητας">
+  <div><label for="ci">Άφιξη</label><input type="date" id="ci" name="check_in" min="<%= today %>" value="<%= (typeof q !== 'undefined' && q.check_in) || '' %>" required></div>
+  <div><label for="co">Αναχώρηση</label><input type="date" id="co" name="check_out" min="<%= today %>" value="<%= (typeof q !== 'undefined' && q.check_out) || '' %>" required></div>
+  <div><label for="g">Επισκέπτες</label>
+    <select id="g" name="guests"><% for (let i = 1; i <= 4; i++) { %><option value="<%= i %>" <%= ((typeof q !== 'undefined' && +q.guests) || 2) === i ? 'selected' : '' %>><%= i %> <%= i === 1 ? 'άτομο' : 'άτομα' %></option><% } %></select>
+  </div>
+  <button class="btn">Έλεγχος διαθεσιμότητας</button>
+</form>

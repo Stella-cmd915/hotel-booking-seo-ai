@@ -1,0 +1,16 @@
+<%- include('../partials/head') %>
+<div class="admin">
+  <aside class="admin-nav">
+    <a class="brand" href="/admin"><img src="/img/logo.svg" alt="" width="30" height="30"><span>Leukon <em>Admin</em></span></a>
+    <nav>
+      <a href="/admin" class="<%= path === '/admin' ? 'active' : '' %>">📊 Πίνακας ελέγχου</a>
+      <a href="/admin/bookings" class="<%= path === '/admin/bookings' ? 'active' : '' %>">📅 Κρατήσεις</a>
+      <a href="/admin/rooms" class="<%= path === '/admin/rooms' ? 'active' : '' %>">🛏 Δωμάτια & SEO</a>
+      <a href="/admin/ai" class="<%= path === '/admin/ai' ? 'active' : '' %>">✨ AI περιεχόμενο</a>
+      <a href="/admin/reviews" class="<%= path === '/admin/reviews' ? 'active' : '' %>">💬 Ανάλυση κριτικών</a>
+      <a href="/admin/chatbot" class="<%= path === '/admin/chatbot' ? 'active' : '' %>">🤖 Ψηφιακός βοηθός</a>
+      <a href="/" target="_blank">↗ Δημόσια ιστοσελίδα</a>
+    </nav>
+    <form method="post" action="/admin/logout"><button class="linkbtn">Αποσύνδεση (<%= admin ? admin.username : '' %>)</button></form>
+  </aside>
+  <main id="main" class="admin-main">

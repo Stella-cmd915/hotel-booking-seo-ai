@@ -1,0 +1,13 @@
+<%- include('../partials/head') %>
+<main id="main" class="login-wrap">
+  <form method="post" action="/admin/login" class="form login">
+    <img src="/img/logo.svg" alt="" width="48" height="48">
+    <h1>Διαχείριση Leukon</h1>
+    <% if (error) { %><div class="alert error" role="alert"><%= error %></div><% } %>
+    <label for="u">Όνομα χρήστη</label><input id="u" name="username" autocomplete="username" required>
+    <label for="p">Κωδικός</label><input id="p" type="password" name="password" autocomplete="current-password" required>
+    <button class="btn">Σύνδεση</button>
+    <p class="small">Επίδειξη: admin / leukon2026</p>
+  </form>
+</main>
+</body></html>

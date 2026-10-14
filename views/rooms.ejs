@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+<section class="container section">
+  <h1>Δωμάτια & Σουίτες στο κέντρο της Θεσσαλονίκης</h1>
+  <p class="lead">Όλα τα δωμάτια διαθέτουν δωρεάν Wi-Fi, κλιματισμό και πρωινό για απευθείας κρατήσεις.</p>
+  <div class="room-list">
+    <% rooms.forEach(function(r){ %>
+    <article class="room-row">
+      <img src="<%= r.image %>" alt="<%= r.name %> – <%= r.view %>" width="600" height="400" loading="lazy">
+      <div>
+        <h2><a href="/rooms/<%= r.slug %>"><%= r.name %></a></h2>
+        <p class="meta"><%= r.size_m2 %> m² · <%= r.bed %> · έως <%= r.max_guests %> άτομα · Θέα: <%= r.view %></p>
+        <p><%= r.short_desc %></p>
+        <ul class="tags"><% r.amenities.split('|').forEach(function(a){ %><li><%= a %></li><% }) %></ul>
+      </div>
+      <div class="room-cta">
+        <p class="price">από <strong><%= Math.round(r.base_price) %> €</strong><br><small>ανά νύχτα</small></p>
+        <a class="btn" href="/rooms/<%= r.slug %>">Λεπτομέρειες</a>
+      </div>
+    </article>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials/footer') %>

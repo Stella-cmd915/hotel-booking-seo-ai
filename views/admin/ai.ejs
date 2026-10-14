@@ -1,0 +1,46 @@
+<%- include('_top') %>
+<h1>AI υποβοήθηση περιεχομένου</h1>
+<p class="lead">Οι προτάσεις παράγονται από τα καταχωρισμένα στοιχεία του δωματίου και <strong>δεν δημοσιεύονται αυτόματα</strong>: αποθηκεύονται ως προσχέδια και εφαρμόζονται μόνο μετά από έγκριση.</p>
+<form class="filters" method="get"><input type="hidden" name="tab" value="<%= tab %>"><label for="rm">Δωμάτιο</label>
+  <select id="rm" name="room" onchange="this.form.submit()"><% rooms.forEach(function(r){ %><option value="<%= r.id %>" <%= r.id===room.id?'selected':'' %>><%= r.name %></option><% }) %></select></form>
+<div class="tabs"><a href="?room=<%= room.id %>&tab=seo" class="<%= tab==='seo'?'active':'' %>">SEO title & meta description</a><a href="?room=<%= room.id %>&tab=social" class="<%= tab==='social'?'active':'' %>">Social media / email</a></div>
+<% if (tab === 'seo') { %>
+<div class="admin-grid">
+  <section class="panel">
+    <h2>Δεδομένα εισόδου (πηγή αλήθειας)</h2>
+    <dl class="kv"><dt>Όνομα</dt><dd><%= room.name %></dd><dt>Εμβαδόν</dt><dd><%= room.size_m2 %> m²</dd><dt>Κρεβάτι</dt><dd><%= room.bed %></dd><dt>Θέα</dt><dd><%= room.view %></dd><dt>Παροχές</dt><dd><%= room.amenities.split('|').join(', ') %></dd></dl>
+    <h3>Τρέχον meta</h3>
+    <div class="serp"><span class="serp-url">leukonhotel.gr › rooms › <%= room.slug %></span><span class="serp-title"><%= room.meta_title || room.name + ' | Leukon Urban Hotel Θεσσαλονίκη' %></span><span class="serp-desc"><%= room.meta_description || room.short_desc %></span></div>
+  </section>
+  <section class="panel">
+    <h2>Προτάσεις (ταξινομημένες με βαθμολογία κανόνων SEO)</h2>
+    <form method="post" action="/admin/ai/suggest">
+      <input type="hidden" name="kind" value="meta"><input type="hidden" name="room_type_id" value="<%= room.id %>">
+      <h3>Τίτλος</h3>
+      <% seo.titles.forEach(function(t, i){ %><label class="opt"><input type="radio" name="title" value="<%= t.text %>" <%= i===0?'checked':'' %>> <%= t.text %> <small>(<%= t.len %> χαρ. · σκορ <%= t.score %>)</small></label><% }) %>
+      <h3>Meta description</h3>
+      <% seo.descriptions.forEach(function(d, i){ %><label class="opt"><input type="radio" name="description" value="<%= d.text %>" <%= i===0?'checked':'' %>> <%= d.text %> <small>(<%= d.len %> χαρ. · σκορ <%= d.score %>)</small></label><% }) %>
+      <button class="btn btn-small">Αποθήκευση ως πρόταση προς έγκριση</button>
+    </form>
+  </section>
+</div>
+<% } else { %>
+<section class="panel">
+  <form class="filters" method="get"><input type="hidden" name="tab" value="social"><input type="hidden" name="room" value="<%= room.id %>">
+    <label for="ch">Κανάλι</label><select id="ch" name="channel"><% ['instagram','facebook','email'].forEach(function(c){ %><option <%= channel===c?'selected':'' %>><%= c %></option><% }) %></select>
+    <label for="of">Προσφορά (προαιρετικά)</label><input id="of" name="offer" value="<%= offer %>" placeholder="π.χ. -15% για διαμονές 3+ νυχτών">
+    <button class="btn btn-small">Δημιουργία</button></form>
+  <form method="post" action="/admin/ai/suggest"><input type="hidden" name="kind" value="social"><input type="hidden" name="room_type_id" value="<%= room.id %>">
+    <textarea name="content" rows="7" class="mono"><%= social %></textarea>
+    <button class="btn btn-small">Αποθήκευση ως πρόταση</button></form>
+</section>
+<% } %>
+<section class="panel">
+  <h2>Ουρά έγκρισης</h2>
+  <table class="tbl"><thead><tr><th>#</th><th>Τύπος</th><th>Δωμάτιο</th><th>Περιεχόμενο</th><th>Κατάσταση</th><th>Ενέργεια</th></tr></thead><tbody>
+  <% suggestions.forEach(function(s){ %><tr><td><%= s.id %></td><td><%= s.kind %></td><td><%= s.room %></td><td class="small"><%= s.kind==='meta' ? JSON.parse(s.content).description : s.content.slice(0,120)+'…' %></td>
+  <td><span class="st <%= s.status %>"><%= {draft:'Προσχέδιο',approved:'Εγκρίθηκε',rejected:'Απορρίφθηκε'}[s.status] %></span></td>
+  <td><% if (s.status==='draft') { %><form method="post" action="/admin/ai/suggestions/<%= s.id %>" class="inline"><button name="action" value="approved" class="btn btn-small">Έγκριση</button><button name="action" value="rejected" class="btn btn-small ghost">Απόρριψη</button></form><% } %></td></tr><% }) %>
+  </tbody></table>
+</section>
+<%- include('_bottom') %>

@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+<script type="application/ld+json"><%- JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Hotel', name: 'Leukon Urban Hotel', url: siteUrl + '/',
+  description: description, image: siteUrl + '/img/hero.svg', telephone: '+30 2310 000 000', priceRange: '€€',
+  address: { '@type': 'PostalAddress', streetAddress: 'Τσιμισκή 100', addressLocality: 'Θεσσαλονίκη', postalCode: '54622', addressCountry: 'GR' },
+  geo: { '@type': 'GeoCoordinates', latitude: 40.6300, longitude: 22.9460 },
+  checkinTime: '15:00', checkoutTime: '12:00', starRating: { '@type': 'Rating', ratingValue: '4' },
+  amenityFeature: ['Δωρεάν Wi-Fi', 'Πρωινό', 'Κλιματισμός', 'Ανελκυστήρας'].map(n => ({ '@type': 'LocationFeatureSpecification', name: n, value: true })),
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: avg, reviewCount: reviewCount, bestRating: 5 }
+}) %></script>
+
+<section class="hero">
+  <img src="/img/hero.svg" alt="Η παραλία της Θεσσαλονίκης με τον Λευκό Πύργο στο ηλιοβασίλεμα" width="1600" height="700" fetchpriority="high">
+  <div class="container hero-text">
+    <p class="eyebrow">Boutique ξενοδοχείο · Κέντρο Θεσσαλονίκης</p>
+    <h1>Διαμονή στην καρδιά της Θεσσαλονίκης, 7 λεπτά από τον Λευκό Πύργο</h1>
+    <p>Σύγχρονα δωμάτια, πρωινό με τοπικές γεύσεις και την καλύτερη τιμή όταν κάνετε κράτηση απευθείας.</p>
+    <%- include('partials/searchbox') %>
+    <ul class="usp"><li>✓ Καλύτερη τιμή απευθείας</li><li>✓ Δωρεάν ακύρωση έως 3 ημέρες</li><li>✓ Πρωινό περιλαμβάνεται</li></ul>
+  </div>
+</section>
+
+<section class="container section">
+  <h2>Δωμάτια & Σουίτες</h2>
+  <p class="lead">Τέσσερις κατηγορίες για κάθε τύπο ταξιδιού: επαγγελματικό, ρομαντική απόδραση ή οικογενειακές διακοπές.</p>
+  <div class="cards">
+    <% rooms.forEach(function(r){ %>
+    <article class="card">
+      <img src="<%= r.image %>" alt="<%= r.name %> – <%= r.view %>" width="600" height="400" loading="lazy">
+      <div class="card-body">
+        <h3><a href="/rooms/<%= r.slug %>"><%= r.name %></a></h3>
+        <p class="meta"><%= r.size_m2 %> m² · έως <%= r.max_guests %> άτομα · <%= r.view %></p>
+        <p><%= r.short_desc %></p>
+        <p class="price">από <strong><%= Math.round(r.base_price) %> €</strong> / νύχτα</p>
+      </div>
+    </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container features">
+    <div><span class="ic">📍</span><h3>Κεντρική τοποθεσία</h3><p>Στην οδό Τσιμισκή, με τα πόδια σε Πλατεία Αριστοτέλους, Λαδάδικα και παραλία.</p></div>
+    <div><span class="ic">☕</span><h3>Πρωινό με τοπικά προϊόντα</h3><p>Μπουγάτσα, κουλούρι Θεσσαλονίκης και μακεδονικά τυριά καθημερινά 07:00–10:30.</p></div>
+    <div><span class="ic">💼</span><h3>Για επαγγελματίες</h3><p>Γρήγορο Wi-Fi, χώρος εργασίας στο δωμάτιο και ευέλικτο check-in.</p></div>
+    <div><span class="ic">👨‍👩‍👧</span><h3>Για οικογένειες</h3><p>Σουίτες δύο χώρων, βρεφική κούνια χωρίς χρέωση και συμβουλές για δραστηριότητες.</p></div>
+  </div>
+</section>
+
+<section class="container section two-col">
+  <div>
+    <h2>Τι λένε οι επισκέπτες μας</h2>
+    <p class="rating"><strong><%= avg %></strong>/5 από <%= reviewCount %> αξιολογήσεις</p>
+    <% reviews.forEach(function(r){ %>
+    <blockquote class="review"><p>«<%= r.text %>»</p><footer><%= '★'.repeat(r.rating) %> — <%= r.author %>, <%= r.platform %></footer></blockquote>
+    <% }) %>
+  </div>
+  <div>
+    <h2>Συχνές ερωτήσεις</h2>
+    <% faq.forEach(function(f){ %>
+    <details class="faq"><summary><%= f.question %></summary><p><%= f.answer %></p></details>
+    <% }) %>
+    <p><a href="/thessaloniki-guide">Διαβάστε τον οδηγό μας για τη Θεσσαλονίκη →</a></p>
+  </div>
+</section>
+<%- include('partials/footer') %>

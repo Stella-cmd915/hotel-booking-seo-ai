@@ -1,0 +1,23 @@
+<%- include('_top') %>
+<h1>Ψηφιακός βοηθός – παρακολούθηση</h1>
+<p class="lead">Ο βοηθός απαντά αποκλειστικά από την ελεγχόμενη βάση συχνών ερωτήσεων. Όταν δεν υπάρχει επαρκής αντιστοίχιση, παραπέμπει στη ρεσεψιόν αντί να «μαντεύει».</p>
+<div class="admin-grid">
+  <section class="panel">
+    <h2>Τελευταίες ερωτήσεις</h2>
+    <table class="tbl"><thead><tr><th>Ερώτηση επισκέπτη</th><th>Αντιστοίχιση FAQ</th><th>Σκορ</th></tr></thead><tbody>
+    <% log.forEach(function(l){ %><tr class="<%= l.matched_faq ? '' : 'miss' %>"><td><%= l.message %></td><td class="small"><%= l.question || (l.score>=1 ? '→ Μηχανή κρατήσεων' : '— Κλιμάκωση σε ρεσεψιόν') %></td><td><%= (+l.score).toFixed(2) %></td></tr><% }) %>
+    </tbody></table>
+  </section>
+  <section class="panel">
+    <h2>Προσθήκη ερώτησης στη βάση γνώσης</h2>
+    <form class="form" method="post" action="/admin/chatbot/faq">
+      <label>Ερώτηση</label><input name="question" required>
+      <label>Εγκεκριμένη απάντηση</label><textarea name="answer" rows="3" required></textarea>
+      <label>Λέξεις-κλειδιά</label><input name="keywords" placeholder="π.χ. γυμναστήριο fitness άσκηση">
+      <button class="btn btn-small">Προσθήκη</button>
+    </form>
+    <h3>Βάση γνώσης (<%= faq.length %> εγγραφές)</h3>
+    <ul class="plain small"><% faq.forEach(function(f){ %><li><%= f.question %></li><% }) %></ul>
+  </section>
+</div>
+<%- include('_bottom') %>

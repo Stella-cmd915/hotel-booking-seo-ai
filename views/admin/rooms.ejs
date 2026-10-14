@@ -1,0 +1,18 @@
+<%- include('_top') %>
+<h1>Δωμάτια & πεδία SEO</h1>
+<% if (saved) { %><div class="alert ok">Οι αλλαγές αποθηκεύτηκαν.</div><% } %>
+<% rooms.forEach(function(r){ %>
+<form class="panel form roomform" method="post" action="/admin/rooms/<%= r.id %>">
+  <h2><%= r.name %> <a class="small" href="/rooms/<%= r.slug %>" target="_blank">/rooms/<%= r.slug %></a></h2>
+  <div class="grid3">
+    <div><label>Βασική τιμή (€/νύχτα)</label><input name="base_price" type="number" step="1" value="<%= r.base_price %>"></div>
+    <div><label>Πλήθος δωματίων</label><input name="inventory" type="number" value="<%= r.inventory %>"></div>
+    <div><label>Χωρητικότητα</label><input value="<%= r.max_guests %>" disabled></div>
+  </div>
+  <label>Σύντομη περιγραφή</label><textarea name="short_desc" rows="2"><%= r.short_desc %></textarea>
+  <label>Meta title <small class="counter" data-max="60">(<%= (r.meta_title||'').length %>/60)</small></label><input name="meta_title" value="<%= r.meta_title || '' %>" placeholder="(προεπιλογή: όνομα δωματίου)">
+  <label>Meta description <small class="counter" data-max="160">(<%= (r.meta_description||'').length %>/160)</small></label><textarea name="meta_description" rows="2" placeholder="(προεπιλογή: σύντομη περιγραφή)"><%= r.meta_description || '' %></textarea>
+  <div class="row-actions"><button class="btn btn-small">Αποθήκευση</button> <a class="btn btn-small ghost" href="/admin/ai?room=<%= r.id %>">✨ Πρόταση AI</a></div>
+</form>
+<% }) %>
+<%- include('_bottom') %>

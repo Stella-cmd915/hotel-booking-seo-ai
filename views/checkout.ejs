@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+<section class="container section">
+  <h1>Στοιχεία κράτησης</h1>
+  <%- include('partials/steps') %>
+  <% if (errors.length) { %><div class="alert error" role="alert"><% errors.forEach(function(e){ %><p><%= e %></p><% }) %></div><% } %>
+  <div class="checkout">
+    <form method="post" action="/booking/checkout" class="form" novalidate>
+      <input type="hidden" name="room" value="<%= room.slug %>">
+      <input type="hidden" name="check_in" value="<%= q.check_in %>">
+      <input type="hidden" name="check_out" value="<%= q.check_out %>">
+      <input type="hidden" name="guests" value="<%= q.guests %>">
+      <input type="hidden" name="source" id="source" value="<%= form.source || 'direct' %>">
+      <div class="grid2">
+        <div><label for="fn">Όνομα *</label><input id="fn" name="first_name" autocomplete="given-name" required value="<%= form.first_name || '' %>"></div>
+        <div><label for="ln">Επώνυμο *</label><input id="ln" name="last_name" autocomplete="family-name" required value="<%= form.last_name || '' %>"></div>
+        <div><label for="em">Email *</label><input id="em" type="email" name="email" autocomplete="email" required value="<%= form.email || '' %>"></div>
+        <div><label for="ph">Τηλέφωνο *</label><input id="ph" type="tel" name="phone" autocomplete="tel" required value="<%= form.phone || '' %>"></div>
+      </div>
+      <label for="nt">Σημειώσεις / ειδικά αιτήματα (προαιρετικό)</label>
+      <textarea id="nt" name="notes" rows="3" maxlength="500" placeholder="π.χ. ώρα άφιξης, θέση στάθμευσης, βρεφική κούνια"><%= form.notes || '' %></textarea>
+      <label class="check"><input type="checkbox" name="consent" value="1" <%= form.consent ? "checked" : "" %>><span>Αποδέχομαι τους όρους κράτησης και την <a href="/privacy" target="_blank">πολιτική απορρήτου</a>. Τα στοιχεία χρησιμοποιούνται αποκλειστικά για τη διαχείριση της κράτησης.</span></label>
+      <button class="btn btn-large">Ολοκλήρωση κράτησης</button>
+      <p class="small">🔒 Δεν απαιτούνται στοιχεία κάρτας. Η πληρωμή γίνεται στο κατάλυμα.</p>
+    </form>
+    <aside class="summary">
+      <img src="<%= room.image %>" alt="<%= room.name %>" width="600" height="400">
+      <h2><%= room.name %></h2>
+      <dl>
+        <dt>Άφιξη</dt><dd><%= q.check_in %> (από 15:00)</dd>
+        <dt>Αναχώρηση</dt><dd><%= q.check_out %> (έως 12:00)</dd>
+        <dt>Νύχτες</dt><dd><%= price.nights %></dd>
+        <dt>Επισκέπτες</dt><dd><%= q.guests %></dd>
+        <dt>Πρωινό</dt><dd>Περιλαμβάνεται</dd>
+      </dl>
+      <p class="total">Σύνολο <strong><%= price.total %> €</strong></p>
+      <p class="small">Δωρεάν ακύρωση έως 3 ημέρες πριν την άφιξη.</p>
+    </aside>
+  </div>
+</section>
+<%- include('partials/footer') %>

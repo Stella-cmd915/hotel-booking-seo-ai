@@ -1,0 +1,12 @@
+<%- include('_top') %>
+<h1>Κρατήσεις</h1>
+<form class="filters" method="get"><label for="st">Κατάσταση</label><select id="st" name="status" onchange="this.form.submit()">
+  <option value="">Όλες</option><option value="confirmed" <%= status==='confirmed'?'selected':'' %>>Επιβεβαιωμένες</option><option value="pending" <%= status==='pending'?'selected':'' %>>Σε εκκρεμότητα</option><option value="cancelled" <%= status==='cancelled'?'selected':'' %>>Ακυρωμένες</option></select></form>
+<table class="tbl"><thead><tr><th>Κωδικός</th><th>Επισκέπτης</th><th>Επικοινωνία</th><th>Δωμάτιο</th><th>Διαμονή</th><th>Άτομα</th><th>Σύνολο</th><th>Πηγή</th><th>Κατάσταση</th></tr></thead>
+<tbody><% list.forEach(function(b){ %><tr>
+  <td><%= b.code %></td><td><%= b.first_name %> <%= b.last_name %></td><td class="small"><%= b.email %><br><%= b.phone %></td><td><%= b.room %></td>
+  <td><%= b.check_in %> → <%= b.check_out %></td><td><%= b.guests %></td><td><%= b.total %> €</td><td><%= b.source %></td>
+  <td><form method="post" action="/admin/bookings/<%= b.id %>/status"><select name="status" onchange="this.form.submit()" aria-label="Κατάσταση <%= b.code %>">
+    <% ['pending','confirmed','cancelled'].forEach(function(s){ %><option value="<%= s %>" <%= b.status===s?'selected':'' %>><%= {pending:'Εκκρεμεί',confirmed:'Επιβεβαιωμένη',cancelled:'Ακυρωμένη'}[s] %></option><% }) %></select></form></td>
+</tr><% }) %></tbody></table>
+<%- include('_bottom') %>

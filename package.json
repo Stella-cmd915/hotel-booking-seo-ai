@@ -1,0 +1,22 @@
+{
+  "name": "leukon-hotel",
+  "version": "1.0.0",
+  "description": "Ξενοδοχειακή ιστοσελίδα με online κρατήσεις, SEO και λειτουργίες AI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "test": "node --no-warnings tests/scenarios.js",
+    "demo": "node --no-warnings scripts/simulate-traffic.js",
+    "reset": "node -e \"require('fs').rmSync('db/hotel.db',{force:true});require('fs').rmSync('db/hotel.db-wal',{force:true});require('fs').rmSync('db/hotel.db-shm',{force:true})\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

@@ -1,0 +1,32 @@
+<%- include('_top') %>
+<h1>Ανάλυση αξιολογήσεων</h1>
+<p class="lead">Αυτόματη ταξινόμηση <%= a.perReview.length %> αξιολογήσεων σε θεματικές ενότητες και συναίσθημα (λεξικό όρων + κανόνες άρνησης). Τα αποτελέσματα είναι ενδεικτικά και ελέγχονται δειγματοληπτικά.</p>
+<div class="kpis">
+  <div class="kpi"><span>Μέση βαθμολογία</span><strong><%= a.avg %>/5</strong></div>
+  <div class="kpi"><span>Θετικές</span><strong class="pos"><%= a.dist['Θετική'] %></strong></div>
+  <div class="kpi"><span>Ουδέτερες</span><strong><%= a.dist['Ουδέτερη'] %></strong></div>
+  <div class="kpi"><span>Αρνητικές</span><strong class="neg"><%= a.dist['Αρνητική'] %></strong></div>
+</div>
+<div class="admin-grid">
+  <section class="panel">
+    <h2>Θεματικές ενότητες (θετικές / αρνητικές αναφορές)</h2>
+    <% const mx = Math.max(...a.summary.map(s => s.pos + s.neg), 1); a.summary.forEach(function(s){ %>
+    <div class="bar-row"><span><%= s.aspect %></span><div class="bar split"><i class="p" style="width:<%= s.pos/mx*100 %>%"></i><i class="n" style="width:<%= s.neg/mx*100 %>%"></i></div><b>+<%= s.pos %> / −<%= s.neg %></b></div>
+    <% }) %>
+  </section>
+  <section class="panel">
+    <h2>Συμπεράσματα για τη διοίκηση</h2>
+    <p><strong>Δυνατά σημεία:</strong> <%= a.strengths.join(', ') %></p>
+    <p><strong>Σημεία βελτίωσης:</strong> <%= a.issues.join(', ') %></p>
+    <p class="small">Πρόταση: αξιοποιήστε τα δυνατά σημεία στο περιεχόμενο της ιστοσελίδας και στις καμπάνιες· προτεραιοποιήστε λειτουργικές παρεμβάσεις για τα σημεία βελτίωσης και απαντήστε δημόσια στις σχετικές κριτικές.</p>
+  </section>
+</div>
+<section class="panel">
+  <h2>Αξιολογήσεις</h2>
+  <table class="tbl"><thead><tr><th>Ημ/νία</th><th>Πλατφόρμα</th><th>★</th><th>Κείμενο</th><th>Θέματα</th><th>Συναίσθημα</th></tr></thead><tbody>
+  <% a.perReview.slice(0,12).forEach(function(r){ %><tr><td><%= r.created_at %></td><td><%= r.platform %></td><td><%= r.rating %></td><td class="small"><%= r.text %></td>
+  <td class="small"><% const m = {}; r.aspects.forEach(x => { const s = x.polarity==='θετικό'?'+':x.polarity==='αρνητικό'?'−':''; m[x.aspect] = m[x.aspect] ? (s && !m[x.aspect].includes(s) ? m[x.aspect]+s : m[x.aspect]) : (s || ' '); }); %><%= Object.entries(m).map(([k,v]) => k + (v.trim() ? ' ('+v.trim().split('').join('/')+')' : '')).join(', ') %></td>
+  <td><span class="st <%= r.sentiment==='Θετική'?'confirmed':r.sentiment==='Αρνητική'?'cancelled':'pending' %>"><%= r.sentiment %></span></td></tr><% }) %>
+  </tbody></table>
+</section>
+<%- include('_bottom') %>

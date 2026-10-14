@@ -1,0 +1,5 @@
+<ol class="steps" aria-label="Βήματα κράτησης">
+  <% ['Ημερομηνίες', 'Επιλογή δωματίου', 'Στοιχεία', 'Επιβεβαίωση'].forEach(function(s, i){ %>
+  <li class="<%= step > i + 1 ? 'done' : step === i + 1 ? 'current' : '' %>" <%= step === i + 1 ? 'aria-current=step' : '' %>><span><%= i + 1 %></span><%= s %></li>
+  <% }) %>
+</ol>
